@@ -44,6 +44,12 @@ class CarsService {
     }
     return pageResponse
   }
+
+
+  async createCar(carData) {
+    const car = await dbContext.Cars.create(carData)
+    return car
+  }
 }
 
 export const carsService = new CarsService()

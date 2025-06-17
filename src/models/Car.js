@@ -1,12 +1,26 @@
 import { Schema } from "mongoose";
 
+function validateDate(value) {
+  const currentYear = new Date().getFullYear()
+  return value <= currentYear + 1
+}
+
+
 export const CarSchema = new Schema(
   {
     // NOTE the database will automatically assign our data a unique ID, so we don't need to include it on our schema
     make: { type: String, minLength: 3, maxLength: 50, required: true },
     model: { type: String, minLength: 1, maxLength: 100, required: true },
-    // TODO show custom validator
-    year: { type: Number, min: 1886, max: 2025, required: true },
+    // TODO show custom validator ✅
+    year: {
+      type: Number,
+      min: 1886,
+      required: true,
+      validate: {
+        validator: validateDate,
+        message: `{VALUE} is not a valid year (must be less than or equal to ${new Date().getFullYear() + 1}) `
+      }
+    },
     price: { type: Number, min: 0, max: 1000000, required: true },
     imgUrl: { type: String, maxLength: 500, required: true },
     description: { type: String, maxLength: 500 },
