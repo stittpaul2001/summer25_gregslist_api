@@ -8,8 +8,8 @@ class CarsService {
   }
 
   async getCarsByQuery(carQuery) {
-    const pageNumber = parseInt(carQuery.page) || 1
-    delete carQuery.page
+    const pageNumber = parseInt(carQuery.page) || 1 // saves page value from query to this method
+    delete carQuery.page // removes page key:value pair from object
 
     const carLimit = 10
     const skipAmount = (pageNumber - 1) * carLimit

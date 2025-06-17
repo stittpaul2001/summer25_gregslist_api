@@ -31,7 +31,8 @@ export class CarsController extends BaseController {
   */
   async getCarsByQuery(request, response, next) {
     try {
-      // NOTE ?make=mazda --> { make: 'mazda' }
+      // api/cars/search?make=mazda --> { make: 'mazda' }
+      // api/cars/search?make=mazda&model=miata --> { make: 'mazda', model: 'miata' }
       const carQuery = request.query
       const cars = await carsService.getCarsByQuery(carQuery)
       response.send(cars)
