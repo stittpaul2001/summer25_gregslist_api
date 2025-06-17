@@ -8,7 +8,9 @@ class CarsService {
 
   async getCarsByQuery(carQuery) {
     // const cars = await dbContext.Cars.find({ make: 'Mazda', model: 'Miata' })
-    const cars = await dbContext.Cars.find(carQuery)
+    // const cars = await dbContext.Cars.find(carQuery).populate('creator', '-subs -email')
+    // const cars = await dbContext.Cars.find(carQuery).populate('creator', ['name', 'picture'])
+    const cars = await dbContext.Cars.find(carQuery).populate('creator', 'name picture')
     return cars
   }
 }

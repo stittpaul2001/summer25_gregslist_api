@@ -20,6 +20,14 @@ export const CarSchema = new Schema(
   // NOTE schema options
   {
     timestamps: true, // automatically adds updatedAt and createdAt timestamps
-    versionKey: false // removes __v
+    versionKey: false, // removes __v
+    toJSON: { virtuals: true } // allows virtual properties when converting to JSON
   }
 )
+
+CarSchema.virtual('creator', {
+  localField: 'creatorId', // something from my schema that I can use to access data in another collection
+  ref: 'Account', // the collection we are looking through for a match
+  foreignField: '_id', // what will my localField match in the ref collection
+  justOne: true // there will only be one match
+})
