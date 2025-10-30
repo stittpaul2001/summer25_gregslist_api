@@ -3,21 +3,23 @@ import { dbContext } from "../db/DbContext.js"
 class HousesService {
 
 
-  async getHousesByQuery(houseQuery) {
+  async getAllHouses(houseQuery) {
+    const sortBy = houseQuery.sort || 'createdAt'
+    delete houseQuery.sort
     const pageNumber = parseInt(houseQuery.page) || 1
     delete houseQuery.page
     const houseLimit = 10
     const skipAmount = (pageNumber - 1) * houseLimit
 
-    //   const housesCount = await dbContext.Houses.
-    //     // .find(houseQuery)
-    //     // .skip(skipAmount)
-    //     // .limit(houseLimit)
+    const houses = await dbContext.Houses
+      .find(houseQuery)
+      .sort(sortBy)
+      .skip(skipAmount)
+      .limit(houseLimit)
+      .populate('creator', 'name picture')
 
-    //     // .populate('creator', 'name picture')
-    //   // .populate('levels:2')
-    //   // const houses = await dbContext.Houses.find({ levels: 2 }).populate
-    //   return houses
+    // const houses = await dbContext.Houses.find({ levels: 2 }).populate
+    return houses
 
   }
 
@@ -27,20 +29,20 @@ class HousesService {
   //   nextPage == pageNumber ? null : pageNumber + 1,
   // totalAmount: housesCount,
   // totalPages: totalPages,
-  // houses: houses
+  // houses: houses}
 
 
 
 
-  async getAllHouses() {
+  // async getAllHouses() {
 
-    //NOTE - can add in any specific characteristic to help search by that name and pull out only those with that characteristic trait you had searched for.
+  //   //NOTE - can add in any specific characteristic to help search by that name and pull out only those with that characteristic trait you had searched for.
 
-    const houses = await dbContext.Houses.find()
+  //   const houses = await dbContext.Houses.find()
 
 
-    return houses
-  }
+  //   return houses
+  // }
 
 }
 
